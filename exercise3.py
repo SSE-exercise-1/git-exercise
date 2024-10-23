@@ -1,5 +1,3 @@
-from scripts.main import tolerance
-
 from exercise1 import Vector
 from exercise2 import Point2D
 
