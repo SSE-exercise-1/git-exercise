@@ -1,3 +1,5 @@
+from scripts.main import tolerance
+
 from exercise1 import Vector
 from exercise2 import Point2D
 
@@ -25,14 +27,14 @@ class Rectangle:
     def upper_right(self) -> Point2D:
         return self.corner(3)
 
-    # def contains(self, point: Point2D, tolerance: float = 0.0) -> bool: # Task B
-    def contains(self, point: Point2D) -> bool:
+    def contains(self, point: Point2D, tolerance: float = 0.0) -> bool: # Task B
         # Task A: remove duplication by defining a function
         #         that checks if a value is within an interval
         #         and reuse that here.
         ll_px = point.x - self._lower_left.x
         ll_py = point.y - self._lower_left.y
-        return self.is_in_interval(ll_px,self._dx) and self.is_in_interval(ll_py,self._dy)
+        return (self.is_in_interval(ll_px,self._dx,tolerance)
+                and self.is_in_interval(ll_py,self._dy,tolerance))
 
 
     def _is_idx_on_upper_edge(self, i: int) -> bool:
@@ -41,8 +43,8 @@ class Rectangle:
     def _is_idx_on_right_edge(self, i: int) -> bool:
         return i in [1, 3]
 
-    def is_in_interval(self, value, interval) -> bool: # Task A
-        return value >= 0 and value <= interval
+    def is_in_interval(self, value, interval, tolerance) -> bool: # Task A
+        return value >= -tolerance and value <= interval + tolerance
 
 def test_rectangle_contains_exact() -> None:
     rectangle = Rectangle(lower_left=Point2D(1.0, 2.0), dx=2.5, dy=1.5)
